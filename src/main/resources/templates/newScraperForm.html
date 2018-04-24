@@ -31,51 +31,34 @@
     </div>
 </header>
 
-<main class="w3-container w3-margin w3-padding-16" style="position: relative">
-    <div class="w3-margin">
-        <!-- <h1 th:text="'Hello, ' + ${name} + '!'"></h1> -->
-		<p class="w3-myFont w3-xxlarge w3-center">Make scraping easy with EasyScraper.</p>
-    </div>
+<main class="w3-margin w3-padding-16">
 
-		<div class="w3-cell-row ">
+	<div class="w3-display-container" style="height:500px;">
+		<form class="w3-container w3-display-middle w3-blue w3-padding-16" style="width: 100%">
 
-		  <div class="w3-container w3-cell w3-cell-middle">
-			<p class="w3-myFont w3-large w3-right">Type URLs, specify keywords, create new scrapers and scrape data from Internet easily.</p>
-		  </div>
+			<label>Name of scraper</label>
+			<input class="w3-input w3-blue w3-margin-bottom" type="text" name="name">
 
-		  <div class="w3-container w3-cell w3-center">
-			<img src="../static/images/web.png" class="w3-image" style="width: 45%"/>
-		  </div>
-
-		</div>
-		
-		<div class="w3-cell-row">
-          <div class="w3-container w3-cell w3-center">
-			<img src="../static/images/db.png" class="w3-image" style="width: 50%"/>
-		  </div>
-
-		  <div class="w3-container w3-cell w3-cell-middle">
-			<p class="w3-myFont w3-large w3-right">Save scraped data in database and files for future analysis.</p>
-		  </div>
-		  
-	    </div>
-
-		<div class="w3-cell-row">
-
-		  <div class="w3-container w3-cell w3-cell-middle">
-			<p class="w3-myFont w3-large w3-right">Schedule scraping and get fresh data every hour, day, month and etc. .</p>
-		  </div>
-
-		  <div class="w3-container w3-cell w3-left">
-			<img src="../static/images/clock.png" class="w3-image" style="width: 50%"/>
-		  </div>
-
-		</div>
+			<label>Scheduling</label>
+			<select class="w3-select w3-margin-top w3-margin-bottom w3-light-blue" name="option">
+				  <option value="" disabled selected>Schedule by:</option>
+				  <option value="1" class="w3-hover-text-red">day and time</option>
+				  <option value="2">weekday and time</option>
+				  <option value="3">month day and time</option>
+			</select>
+			
+			
+			<input class="w3-input w3-blue" type="date" name="schedule">
+			
+			<input type="submit" class="w3-btn w3-light-blue w3-margin" value="Create"></input>
+		</form>
+	</div>
+    
 
 </main>
 
 
-<footer class="w3-bottom" style="position: relative">
+<footer class="w3-bottom" style="position: bottom">
     <div class="w3-bar w3-blue">
         <p class="w3-myFont w3-large w3-center">© 2018 EasyScraper. All rights reserved</p>
     </div>
