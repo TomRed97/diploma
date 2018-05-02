@@ -1,3 +1,24 @@
 .w3-myFont {
     font-family: "Comic Sans MS", cursive, sans-serif;
 }
+.container {
+    width: 1200px;
+    margin: 0 auto;
+}
+.img-container {
+    width: 300px;
+}
+.form-container {
+    color: #132550!important;
+    background-color: #ffffff!important;
+    box-shadow: 1px 1px 9px #498ca7;
+    border-radius: 4px;
+    margin: 80px auto;
+}
+input.aaa {
+    width: 100%;
+    border-width: 0 0 1px 0;
+    border-color: #39399a;
+    padding: 15px 7px;
+    margin: 15px 0;
+}

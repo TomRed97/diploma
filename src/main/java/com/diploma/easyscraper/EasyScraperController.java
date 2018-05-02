@@ -27,4 +27,11 @@ public class EasyScraperController {
 
         return "home";
     }
+
+    @GetMapping("/newScraper")
+    public String createNewScraper(Model model) throws IOException {
+
+
+        return "newScraperForm";
+    }
 }
