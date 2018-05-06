@@ -34,46 +34,13 @@
 <main class="w3-container w3-margin w3-padding-16">
     <div class="w3-margin">
         <!-- <h1 th:text="'Hello, ' + ${name} + '!'"></h1> -->
-		<p class="w3-myFont w3-xxlarge w3-center">Make scraping easy with EasyScraper.</p>
+		<p class="w3-myFont w3-xxlarge w3-center">Your scrapers</p>
     </div>
 
 	<div class="container">
-
-		<div class="w3-cell-row ">
-
-		  <div class="w3-container w3-cell w3-cell-middle">
-			<p class="w3-myFont w3-large w3-right">Type URLs, specify keywords, create new scrapers and scrape data from Internet easily.</p>
-		  </div>
-
-		  <div class="w3-container w3-cell w3-center img-container">
-			<img src="./images/web.png" class="w3-image"/>
-		  </div>
-
-		</div>
-
-		<div class="w3-cell-row">
-          <div class="w3-container w3-cell w3-center img-container">
-			<img src="./images/db.png" class="w3-image"/>
-		  </div>
-
-		  <div class="w3-container w3-cell w3-cell-middle">
-			<p class="w3-myFont w3-large w3-left">Save scraped data in database and files for future analysis.</p>
-		  </div>
-
-	    </div>
-
-		<div class="w3-cell-row">
-
-		  <div class="w3-container w3-cell w3-cell-middle">
-			<p class="w3-myFont w3-large w3-right">Schedule scraping and get fresh data every hour, day, month and etc. .</p>
-		  </div>
-
-		  <div class="w3-container w3-cell w3-left img-container">
-			<img src="./images/clock.png" class="w3-image"/>
-		  </div>
-
-		</div>
-
+		<ol>
+			<li th:each="job:${scrapers}"><a th:href="@{'/scraper/' + ${job.getId()}}" th:text="${job.getName()}"></a></li>
+		</ol>
 	</div>
 
 </main>

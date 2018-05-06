@@ -16,10 +16,10 @@ public class ScrapeJob {
     public ScrapeJob() {
     }
 
-    public ScrapeJob(int id, String name, LocalDate scheduleTime) {
+    public ScrapeJob(int id, String name) {
         this.id = id;
         this.name = name;
-        this.scheduleTime = scheduleTime;
+//        this.scheduleTime = scheduleTime;
     }
 
     public int getId() {
