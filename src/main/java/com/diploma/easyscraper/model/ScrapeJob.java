@@ -1,32 +1,46 @@
 package com.diploma.easyscraper.model;
 
-import org.springframework.stereotype.Component;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
-import java.time.LocalDate;
-
-@Component()
+@Entity()
+@Table(name = "scrape_job")
 public class ScrapeJob {
 
-    private int id;
+    @Id()
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
 
     private String name;
 
-    private LocalDate scheduleTime;
+    private String urls;
+
+    private String keywords;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     public ScrapeJob() {
     }
 
-    public ScrapeJob(int id, String name) {
-        this.id = id;
+    public ScrapeJob(String name, User user, String urls, String keywords) {
         this.name = name;
-//        this.scheduleTime = scheduleTime;
+        this.user = user;
+        this.urls = urls;
+        this.keywords = keywords;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -38,11 +52,38 @@ public class ScrapeJob {
         this.name = name;
     }
 
-    public LocalDate getScheduleTime() {
-        return scheduleTime;
+    public User getUser() {
+        return user;
     }
 
-    public void setScheduleTime(LocalDate scheduleTime) {
-        this.scheduleTime = scheduleTime;
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public String getUrls() {
+        return urls;
+    }
+
+    public void setUrls(String urls) {
+        this.urls = urls;
+    }
+
+    public String getKeywords() {
+        return keywords;
+    }
+
+    public void setKeywords(String keywords) {
+        this.keywords = keywords;
+    }
+
+    @Override
+    public String toString() {
+        return "ScrapeJob{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", urls='" + urls + '\'' +
+                ", keywords='" + keywords + '\'' +
+                ", user=" + user +
+                '}';
     }
 }

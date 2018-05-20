@@ -1,15 +1,11 @@
 package com.diploma.easyscraper;
 
-import com.diploma.easyscraper.interfaces.MailService;
+import com.diploma.easyscraper.interfaces.ScrapeJobService;
 import com.diploma.easyscraper.interfaces.UserService;
+import com.diploma.easyscraper.interfaces.WebScrapingService;
 import com.diploma.easyscraper.model.ScrapeJob;
-import com.diploma.easyscraper.interfaces.UserRepository;
 import com.diploma.easyscraper.model.User;
-import com.diploma.easyscraper.service.UserServiceImpl;
-import com.diploma.easyscraper.service.WebScraperService;
-import org.apache.xpath.operations.Bool;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,9 +14,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.mail.MessagingException;
 import java.io.IOException;
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -30,7 +26,10 @@ public class EasyScraperController {
     private UserService userService;
 
     @Autowired
-    private MailService mailService;
+    private ScrapeJobService scrapeJobService;
+
+    @Autowired
+    private WebScrapingService webScrapingService;
 
     @GetMapping("/home")
     public String getHomePage(Model model) {
@@ -42,32 +41,39 @@ public class EasyScraperController {
     }
 
     @GetMapping("/newScraper")
-    public String createNewScraper(Model model) {
+    public String getNewScraperForm(Model model) {
+        model.addAttribute("scrapeJob", new ScrapeJob());
 
         return "newScraperForm";
     }
 
+    @PostMapping("/newScraper")
+    public String createNewScraper(@ModelAttribute("scrapeJob") ScrapeJob scrapeJob, Principal principal) throws IOException, MessagingException {
+
+        scrapeJob.setUser(userService.findUserByLogin(principal.getName()).get());
+        scrapeJobService.save(scrapeJob);
+
+        webScrapingService.scrape(scrapeJob);
+
+        return "redirect:view";
+    }
+
     @GetMapping("/view")
-    public String viewScraper(Model model) {
-        ScrapeJob scrapeJob = new ScrapeJob(1, "My Scraper");
-        ScrapeJob scrapeJob1 = new ScrapeJob(2, "My Scraper 2");
-        List<ScrapeJob> list = new ArrayList<>();
+    public String viewScraper(Model model, Principal principal) {
 
-
-//        mailService.send("taprikyan@gmail.com", "Barev");
-
-        list.add(scrapeJob);
-        list.add(scrapeJob1);
+        List<ScrapeJob> list = scrapeJobService.findScrapeJobByUserId(userService.findUserByLogin(principal.getName()).get().getId());
 
         model.addAttribute("scrapers", list);
 
         return "viewScrapers";
     }
 
-    @GetMapping("/scraper/{id}")
-    public String getScraper(@PathVariable int id, Model model) throws IOException {
-        model.addAttribute("body", WebScraperService.doScraping());
-        return "scraper";
+    @GetMapping("/delete/{id}")
+    public String deleteScraper(@PathVariable int id) {
+
+        scrapeJobService.deleteScraperById(id);
+
+        return "deletedScraper";
     }
 
     @GetMapping("/login")
@@ -97,7 +103,7 @@ public class EasyScraperController {
 
         userService.save(user);
 
-        return "redirect: login";
+        return "redirect:login";
     }
 
 }
