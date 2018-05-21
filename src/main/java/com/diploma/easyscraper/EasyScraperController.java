@@ -1,10 +1,11 @@
 package com.diploma.easyscraper;
 
+import com.diploma.easyscraper.interfaces.SchedulerService;
 import com.diploma.easyscraper.interfaces.ScrapeJobService;
 import com.diploma.easyscraper.interfaces.UserService;
-import com.diploma.easyscraper.interfaces.WebScrapingService;
 import com.diploma.easyscraper.model.ScrapeJob;
 import com.diploma.easyscraper.model.User;
+import com.diploma.easyscraper.service.SchedulerServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -29,7 +30,7 @@ public class EasyScraperController {
     private ScrapeJobService scrapeJobService;
 
     @Autowired
-    private WebScrapingService webScrapingService;
+    private SchedulerService schedulerService;
 
     @GetMapping("/home")
     public String getHomePage(Model model) {
@@ -53,7 +54,7 @@ public class EasyScraperController {
         scrapeJob.setUser(userService.findUserByLogin(principal.getName()).get());
         scrapeJobService.save(scrapeJob);
 
-        webScrapingService.scrape(scrapeJob);
+        schedulerService.schedule(scrapeJob);
 
         return "redirect:view";
     }
@@ -72,6 +73,7 @@ public class EasyScraperController {
     public String deleteScraper(@PathVariable int id) {
 
         scrapeJobService.deleteScraperById(id);
+        schedulerService.deleteTask(id);
 
         return "deletedScraper";
     }

@@ -36,18 +36,4 @@ public class MailServiceImpl implements MailService {
 
         file.delete();
     }
-
-//    MimeMessage message = emailSender.createMimeMessage();
-//      
-//            MimeMessageHelper helper = new MimeMessageHelper(message, true);
-//     
-//            helper.setTo(to);
-//    helper.setSubject(subject);
-//    helper.setText(text);
-//         
-//            FileSystemResource file
-//      = new FileSystemResource(new File(pathToAttachment));
-//    helper.addAttachment("Invoice", file);
-// 
-//            emailSender.send(message);
 }
